@@ -18,7 +18,6 @@ public class UsuarioConverter {
     // perceba que para Endereco e Telefone precisamos utilizar os metodos abaixo, pois elas são da classe List
     public Usuario paraUsuario(UsuarioDTO usuarioDTO) {
         return Usuario.builder().nome(usuarioDTO.getNome()).email(usuarioDTO.getEmail()).senha(usuarioDTO.getSenha()).enderecos(paraListaEndereco(usuarioDTO.getEndereco())).telefones(paraListaTelefone(usuarioDTO.getTelefone())).build();
-                
     }
 
     // perceba que precisamos de 2 métodos para as classes Endereco e Telefone;
