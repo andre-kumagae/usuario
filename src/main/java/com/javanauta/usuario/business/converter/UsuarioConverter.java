@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 // esta anotacao marca a classe como um bean Spring. É necessária para injetar a dependência em outras classes
 @Component
 public class UsuarioConverter {
@@ -56,14 +57,46 @@ public class UsuarioConverter {
     }
 
     public EnderecoDTO paraEnderecoDTO(Endereco endereco) {
-        return EnderecoDTO.builder().rua(endereco.getRua()).numero(endereco.getNumero()).complemento(endereco.getComplemento()).bairro(endereco.getBairro()).cidade(endereco.getCidade()).estado(endereco.getEstado()).cep(endereco.getCep()).build();
+        return EnderecoDTO.builder().id(endereco.getId()).rua(endereco.getRua()).numero(endereco.getNumero()).complemento(endereco.getComplemento()).bairro(endereco.getBairro()).cidade(endereco.getCidade()).estado(endereco.getEstado()).cep(endereco.getCep()).build();
     }
 
-    public List<TelefoneDTO> paraListaTelefoneDTO(List<Telefone> listaTelefonesDTOS){
+    public List<TelefoneDTO> paraListaTelefoneDTO(List<Telefone> listaTelefonesDTOS) {
         return listaTelefonesDTOS.stream().map(this::paraTelefoneDTO).toList();
     }
 
     public TelefoneDTO paraTelefoneDTO(Telefone telefone) {
-        return TelefoneDTO.builder().telefone(telefone.getTelefone()).ddd(telefone.getDdd()).build();
+        return TelefoneDTO.builder().id(telefone.getId()).telefone(telefone.getTelefone()).ddd(telefone.getDdd()).build();
+    }
+
+    public Usuario updateUsuario(UsuarioDTO usuarioDTO, Usuario entity) {
+        return Usuario.builder()
+                .nome(usuarioDTO.getNome() != null ? usuarioDTO.getNome() : entity.getNome())
+                .id(entity.getId())
+                .senha(usuarioDTO.getSenha() != null ? usuarioDTO.getSenha() : entity.getSenha())
+                .email(usuarioDTO.getEmail() != null ? usuarioDTO.getEmail() : entity.getEmail())
+                .enderecos(entity.getEnderecos())
+                .telefones(entity.getTelefones())
+                .build();
+    }
+
+    public Endereco updateEndereco(EnderecoDTO enderecoDTO, Endereco enderecoEntity) {
+        return Endereco.builder()
+                .id(enderecoEntity.getId())
+                .rua(enderecoDTO.getRua() != null ? enderecoDTO.getRua() : enderecoEntity.getRua())
+                .numero(enderecoDTO.getNumero() != null ? enderecoDTO.getNumero() : enderecoEntity.getNumero())
+                .complemento(enderecoDTO.getComplemento() != null ? enderecoDTO.getComplemento() : enderecoEntity.getComplemento())
+                .bairro(enderecoDTO.getBairro() != null ? enderecoDTO.getBairro() : enderecoEntity.getBairro())
+                .cidade(enderecoDTO.getCidade() != null ? enderecoDTO.getCidade() : enderecoEntity.getCidade())
+                .estado(enderecoDTO.getEstado() != null ? enderecoDTO.getEstado() : enderecoEntity.getEstado())
+                .cep(enderecoDTO.getCep() != null ? enderecoDTO.getCep() : enderecoEntity.getCep())
+                .build();
+    }
+
+    public Telefone updateTelefone(TelefoneDTO telefoneDTO, Telefone telefoneEntity) {
+        return Telefone.builder()
+                .id(telefoneEntity.getId())
+                .telefone(telefoneDTO.getTelefone() != null ? telefoneDTO.getTelefone() : telefoneEntity.getTelefone())
+                .ddd(telefoneDTO.getTelefone() != null ? telefoneDTO.getDdd() : telefoneEntity.getDdd())
+                .build();
     }
 }
