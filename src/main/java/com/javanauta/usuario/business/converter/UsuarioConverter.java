@@ -96,7 +96,15 @@ public class UsuarioConverter {
         return Telefone.builder()
                 .id(telefoneEntity.getId())
                 .telefone(telefoneDTO.getTelefone() != null ? telefoneDTO.getTelefone() : telefoneEntity.getTelefone())
-                .ddd(telefoneDTO.getTelefone() != null ? telefoneDTO.getDdd() : telefoneEntity.getDdd())
+                .ddd(telefoneDTO.getDdd() != null ? telefoneDTO.getDdd() : telefoneEntity.getDdd())
                 .build();
+    }
+
+    public Endereco paraEnderecoEntity(EnderecoDTO enderecoDTO, Long usuario_id) {
+        return Endereco.builder().rua(enderecoDTO.getRua()).numero(enderecoDTO.getNumero()).complemento(enderecoDTO.getComplemento()).bairro(enderecoDTO.getBairro()).cidade(enderecoDTO.getCidade()).estado(enderecoDTO.getEstado()).cep(enderecoDTO.getCep()).usuario_id(usuario_id).build();
+    }
+
+    public Telefone paraTelefoneEntity(TelefoneDTO telefoneDTO, Long usuario_id) {
+        return Telefone.builder().telefone(telefoneDTO.getTelefone()).ddd(telefoneDTO.getDdd()).usuario_id(usuario_id).build();
     }
 }
